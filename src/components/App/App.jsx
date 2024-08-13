@@ -1,22 +1,38 @@
-import userData from "../../userData.json";
-import Profile from "../Profile/Profile";
-import FriendList from "../FriendList/FriendList";
-import friends from "../../friends.json";
-import TransactionHistory from "../TransactionHistory/TransactionHistory";
-import transactions from "../../transactions.json";
+import Feedback from "../Feedback/Feedback";
+import Options from "../Options/Options";
+import Description from "../Description/Description";
+import { useState } from "react";
+import Notification from "../Notification/Notification";
 
 export default function App() {
+  const [feedback, setFeedback] = useState({
+    good: 0,
+    neutral: 0,
+    bad: 0,
+  });
+
+  const totalFeedback = feedback.good + feedback.neutral + feedback.bad;
+
+  const updateFeedback = feedbackType => {
+    setFeedback(prevFeedback => ({
+      ...prevFeedback,
+      [feedbackType]: prevFeedback[feedbackType] + 1,
+    }));
+  };
+
   return (
     <>
-      <Profile
-        username={userData.username}
-        tag={userData.tag}
-        location={userData.location}
-        avatar={userData.avatar}
-        stats={userData.stats}
-      />
-      <FriendList friends={friends} />
-      <TransactionHistory items={transactions} />
+      <Description />
+      <Options onLeaveFeedback={updateFeedback} />
+      {totalFeedback > 0 ? (
+        <Feedback
+          good={feedback.good}
+          neutral={feedback.neutral}
+          bad={feedback.bad}
+        />
+      ) : (
+        <Notification />
+      )}
     </>
   );
 }
