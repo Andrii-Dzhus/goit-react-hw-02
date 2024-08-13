@@ -1,0 +1,11 @@
+.ul {
+  display: flex;
+  gap: 10px;
+
+  list-style-type: none;
+}
+
+.li {
+  width: 180px;
+  border-radius: 30px;
+}
