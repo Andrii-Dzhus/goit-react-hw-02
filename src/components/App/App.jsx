@@ -4,12 +4,12 @@ import Description from "../Description/Description";
 import { useState, useEffect } from "react";
 import Notification from "../Notification/Notification";
 
+const defVal = { good: 0, neutral: 0, bad: 0 };
+
 export default function App() {
   const [feedback, setFeedback] = useState(() => {
     const saveFeedback = window.localStorage.getItem("feedback");
-    return saveFeedback !== null
-      ? JSON.parse(saveFeedback)
-      : { good: 0, neutral: 0, bad: 0 };
+    return saveFeedback !== null ? JSON.parse(saveFeedback) : defVal;
   });
 
   useEffect(() => {
@@ -28,11 +28,7 @@ export default function App() {
   };
 
   const resetClicks = () => {
-    setFeedback({
-      good: 0,
-      neutral: 0,
-      bad: 0,
-    });
+    setFeedback(defVal);
   };
 
   return (
